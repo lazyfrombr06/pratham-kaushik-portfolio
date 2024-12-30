@@ -1,0 +1,20 @@
+.image-container {
+    perspective: 1000px; /* For 3D effect */
+    display: inline-block;
+  }
+  
+  .hover-image {
+    width: 80%;
+    height: auto;
+    transition: transform 0.1s ease-out, scale 0.2s ease-out;
+    transform-style: preserve-3d;
+    mix-blend-mode: luminosity;
+    border-radius: 30px;
+  }
+  
+  .image-container:hover .hover-image {
+    transform: scale(1.1); /* Zoom effect when hovered */
+    mix-blend-mode: normal;
+    box-shadow: 0 2px 8px 0 rgba(149, 149, 149, 0.075), 0 3px 20px 0 rgba(175, 175, 175, 0.098);
+  }
+  

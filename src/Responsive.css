@@ -1,0 +1,109 @@
+/* For mobile screen  */
+@media only screen and (max-width: 600px) {
+    .navigation-container {
+        display: none;
+    }
+    .home-container {
+        width: 90%;
+        margin: auto;
+    }
+    .about-me-image-and-text-container {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .image-with-hover-effect-container {
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+    .about-me-text-desc-container {
+        width: 90%;
+        margin-top: 12px;
+    }
+    .about-me-text-description-heading {
+        font-size: 1.4rem;
+        padding: 0;
+        margin: 0;
+    }
+    .about-me-text-description-sub-heading {
+        color: rgb(209, 209, 209);
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+    }
+    .about-me-text-box {
+        color: var(--pcolor);
+        padding: 2% 0;
+        line-height: 24px;
+        font-size: .8rem;
+    }
+    .skills-and-abilities-box-each {
+        height: 150px;
+        width: 150px;
+    }
+    .skills-and-abilities-box-img-container {
+        height: 65%;
+        width: 73%;
+    }
+
+    .my-education-box {
+        width: 75%;
+        margin: 4% auto;
+        flex-direction: column;
+    }
+    .unversity-image-container-in-my-education {
+        width: 100%;
+    }
+    .university-name-my-education-heading {
+        font-size: 1.3rem;
+        color: var(--scolor);
+        font-weight: bold;
+    }
+    .university-name-my-education-sub-heading {
+        font-size: 1rem;
+        color: var(--button-color);
+        font-weight: bold;
+        margin: 3% 0;
+    }
+    .project-made-box {
+        width: 100%;
+        height: 423px;
+        margin: 8% auto;
+        background-color: rgba(83, 82, 82, 0.42);
+        text-align: center;
+        padding: 20px 0;
+    }
+    .project-text-and-link-details-container {
+       padding: 0 7px;
+        padding-top: 12px;
+    }
+    .contact-me-box-container {
+     
+        flex-direction: column;
+    }
+    .image-container-of-contact-me {
+        width: 65%;
+        margin: auto;
+    }
+    .form-container-of-contact-me {
+      
+        margin: .5% auto;
+        padding: 16px 4px;
+        /* width: 54%; */
+        width: 100%;
+    }
+    .footer-box-container {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        padding-bottom: 20px;
+    }
+    .footer-box {
+        width: 80%;
+        margin: auto;
+       
+    }
+
+  }
