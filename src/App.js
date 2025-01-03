@@ -25,7 +25,7 @@ import {
   FaMapMarkerAlt,
   FaArrowCircleDown,
   FaTelegramPlane,
-  FaYoutube
+  FaYoutube,
 } from "react-icons/fa"; //React icons
 import dpsru from "./Media/dpsru image.jpg";
 import pgims from "./Media/pt-bhagwat-dayal-sharma-post-graduate-institute-of-medical-sciences-rohtak-universities-wiaexi0.avif";
@@ -81,6 +81,10 @@ import whatsappCertificate4 from "./Media/Certificate/WhatsApp Certificate 4.jpe
 import whatsappCertificate5 from "./Media/Certificate/WhatsApp Certificate 5.jpeg";
 import whatsappCertificate6 from "./Media/Certificate/WhatsApp Certificate 6.jpeg";
 
+import pinCertificate001 from "./Media/Certificate/CertificateOfCompletion_Handson Data Science and AI for Healthcare_page-0001.jpg";
+import pinCertificate002 from "./Media/Certificate/CertificateOfCompletion_A Day In The Life of a Data Scientist_page-0001.jpg";
+import pinCertificate003 from "./Media/Certificate/AI IN MEDICINE_page-0001.jpg";
+
 //Projects
 import project1 from "./Media/Projects/project 1.jpeg";
 import project2 from "./Media/Projects/project 2.jpeg";
@@ -110,15 +114,75 @@ import project25 from "./Media/Projects/project 25.jpeg";
 import project26 from "./Media/Projects/project 26.jpeg";
 
 const App = () => {
+  // useinview animation for About container
+  const { ref, inView } = useInView({
+    threshold: 0.2, // Trigger when 20% of the component is visible
+    // triggerOnce: true, // Animate only the first time it comes into view
+    triggerOnce: false, // Animate every time comes into view
+  });
+
+  const animationVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  // Box animation for Skills container
+  const { ref: skillsRef, inView: isSkillsInView } = useInView({
+    threshold: 0.2, // Trigger when 20% of the section is visible
+  });
+
+  // Animation variants for staggered box animation
+  const containerVariants = {
+    visible: {
+      transition: {
+        staggerChildren: 0.1, // Delay between child animations
+      },
+    },
+  };
+
+  const boxVariants = {
+    hidden: { opacity: 0, y: 50 }, // Initial state of each box
+    visible: { opacity: 1, y: 0 }, // Final state when visible
+  };
+  // Box animation for Skills container end here
+  
+
+// ***********************************F
+
+ // Box animation for Projects container
+ const { ref: projectsRef, inView: isProjectsInView } = useInView({
+  threshold: 0.2, // Trigger when 20% of the section is visible
+});
+
+// Animation variants for staggered box animation
+const projectContainerVariants = {
+  visible: {
+    transition: {
+      staggerChildren: 0.1, // Delay between child animations
+    },
+  },
+};
+
+const projectBoxVariants = {
+  hidden: { opacity: 0, y: 50 }, // Initial state of each box
+  visible: { opacity: 1, y: 0 }, // Final state when visible
+};
+
+// ***********************************
+
+
+  
   const [seeMore, setSeeMore] = useState(false);
-  const [seeMoreProject, setSeeMoreProject] = useState(false);
+  const [seeMoreProject, setSeeMoreProject] = useState(true);
 
   return (
     <div className="App">
       {/* Navigation */}
       <div className="navigation-container">
         <div className="logo-and-nav-container">
-          <div className="logo-nav-container">अहमस्मि योधः - I am a Warrior</div>
+          <div className="logo-nav-container">
+            अहमस्मि योधः - I am a Warrior
+          </div>
           <div className="nav-list-container">
             <ul className="nav-ul">
               <li className="nav-li">
@@ -178,15 +242,14 @@ const App = () => {
               "Machine learning",
               "Healthcare data scientist",
               "Deep learning",
-
-          
             ]}
             typeSpeed={40}
             backSpeed={50}
             loop
           />
           <p className="description">
-          I analyze health data to build innovative and impactful solutions using advanced tech.
+            I analyze health data to build innovative and impactful solutions
+            using advanced tech.
           </p>
           <div className="social-media-link-container">
             <ul className="social-media-ul">
@@ -221,10 +284,16 @@ const App = () => {
                 </a>
               </li>
             </ul>
-          </div> <br />
-          <Link to="about-me" smooth={true} duration={500} className="about-me-button-home-page">
-                  About Me{" "}<FaArrowCircleDown className="faarrowcircledownicon"/>
-                </Link>
+          </div>{" "}
+          <br />
+          <Link
+            to="about-me"
+            smooth={true}
+            duration={500}
+            className="about-me-button-home-page"
+          >
+            About Me <FaArrowCircleDown className="faarrowcircledownicon" />
+          </Link>
         </motion.div>
       </div>
 
@@ -248,11 +317,28 @@ const App = () => {
             />
           </div>
 
-          <div className="about-me-text-desc-container">
-            <h2 className="about-me-text-description-heading">I'm Pratham</h2>
+          <motion.div
+            ref={ref}
+            variants={animationVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            transition={{ duration: 0.8 }}
+            className="about-me-text-desc-container"
+          >
+            {/* <div className="about-me-text-desc-container"> */}
+            <motion.h2
+              ref={ref}
+              variants={animationVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              transition={{ duration: 1 }}
+              className="about-me-text-description-heading"
+            >
+              I'm Pratham
+            </motion.h2>
 
             <h2 className="about-me-text-description-sub-heading">
-            Data Scientist in healthcare
+              Data Scientist in healthcare
             </h2>
 
             <div className="about-me-text-box">
@@ -288,278 +374,366 @@ const App = () => {
                 Resume
               </a>
             </div>
-          </div>
+            {/* </div> */}
+          </motion.div>
         </div>
       </div>
 
       {/* Skill and Abilities container */}
-      <div className="skills-and-abiities-container" id="skills">
+      <div
+        className="skills-and-abiities-container"
+        id="skills"
+        ref={skillsRef}
+      >
         <div className="about-me-container-heading skills-and-abiities-container-heading">
           <FaLaptopCode /> Skills &{" "}
           <span className="different-color-span-text">Abilities</span>
         </div>
 
-        <div className="skills-and-abilities-boxes-container">
+        <motion.div
+          className="skills-and-abilities-boxes-container"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isSkillsInView ? "visible" : "hidden"} // Trigger animation when inView is true
+        >
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={python} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Python
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={groovy} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Groovy
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={scikitLearm} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Scikit-Learn
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={numpy} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Numpy
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={pandas} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Pandas
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={matplotlib} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Matplotlib
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={seaborn} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Seaborn
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={keras} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Kores
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={tenserflow} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Tenserflow
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={nextflow} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Nextflow
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={aws} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               AWS
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={azure} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Azure
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={opencv} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               OpenCV
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={html5} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               HTML5
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={css3} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               CSS3
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={mysql} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               mySQL
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={opneai} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               openAI
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={huggingFace} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Hugging Face
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={langchain} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Langchain
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={git} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Git
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={github} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Git hub
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={powerBI} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Power BI
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={awsglue} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               AWS Glue
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={awss3} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               AWS S3
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={xception} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               Xception
             </div>
-          </div>
+          </motion.div>
 
           {/* skill and ablities each box */}
-          <div className="skills-and-abilities-box-each">
+          <motion.div
+            className="skills-and-abilities-box-each"
+            variants={boxVariants}
+          >
             <div className="skills-and-abilities-box-img-container">
               <img src={msoffice} alt="logo" />
             </div>
             <div className="skills-and-abilities-box-detail-text-container">
               MS Office
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Education Container */}
@@ -570,7 +744,7 @@ const App = () => {
         </div>
 
         <div className="my-education-box-container">
-        <div className="my-education-box">
+          <div className="my-education-box css-for-only-education-box">
             <div className="unversity-image-container-in-my-education">
               <img src={dpsru} alt="Collage" />
             </div>
@@ -587,7 +761,7 @@ const App = () => {
             </div>
           </div>
 
-          <div className="my-education-box">
+          <div className="my-education-box css-for-only-education-box">
             <div className="unversity-image-container-in-my-education">
               <img src={pgims} alt="Collage" />
             </div>
@@ -604,7 +778,6 @@ const App = () => {
               </div>
             </div>
           </div>
-         
         </div>
       </div>
 
@@ -612,6 +785,7 @@ const App = () => {
       <div
         className="my-education-container certificate-container"
         id="certificates"
+        
       >
         <div className="about-me-container-heading">
           <FaCertificate /> My{" "}
@@ -623,6 +797,70 @@ const App = () => {
             seeMore ? "open" : ""
           }`}
         >
+          {/* Certificate box */}
+          <div className="my-education-box">
+            <div className="unversity-image-container-in-my-education">
+              <img src={pinCertificate001} alt="Collage" />
+            </div>
+            <div className="university-and-education-details-container">
+              <div className="university-name-my-education-heading">
+                Hands-on Data Science and AI for Healthcare, by LinkedIn
+              </div>
+              <div className="university-name-my-education-sub-heading">
+                Certificate ID: 1b327f192404d38d35c1dc5a4463ad
+                8637147e1bd172cd66f3ae7c0d4dae751d
+              </div>
+              <div className="my-education-year-and-degree">2024</div>
+            </div>
+          </div>
+
+          {/* Certificate box */}
+          <div className="my-education-box">
+            <div className="unversity-image-container-in-my-education">
+              <img src={pinCertificate002} alt="Collage" />
+            </div>
+            <div className="university-and-education-details-container">
+              <div className="university-name-my-education-heading">
+                A Day In The Life of a Data Scientist, by LinkedIn
+              </div>
+              <div className="university-name-my-education-sub-heading">
+                Certificate ID: e62e8c1597499a5bc0fd1a7f871402a359
+                a4d36b87b08b84757fb0747089cdf7
+              </div>
+              <div className="my-education-year-and-degree">2024</div>
+            </div>
+          </div>
+
+          {/* Certificate box */}
+          <div className="my-education-box">
+            <div className="unversity-image-container-in-my-education">
+              <img src={pinCertificate003} alt="Collage" />
+            </div>
+            <div className="university-and-education-details-container">
+              <div className="university-name-my-education-heading">
+                Specialization in AI for Medicine including Medical Diagnosis,
+                Medical Prognosis, and Medical Treatment by Deep Learning.AI.
+              </div>
+              <div className="university-name-my-education-sub-heading">
+                Verify this certificate :{" "}
+                <a
+                  href="https://coursera.org/verify/specializat
+ion/8T8AXM6QKZDS"
+                  style={{ color: "skyblue", textDecoration: "none" }}
+                >
+                  Click here..{" "}
+                </a>
+              </div>
+              <div className="my-education-year-and-degree">2024</div>
+            </div>
+          </div>
+
+          {seeMore ? (
+            <div className="more-certificate-container">
+
+
+
+
           {/* Certificate box */}
           <div className="my-education-box">
             <div className="unversity-image-container-in-my-education">
@@ -677,8 +915,6 @@ const App = () => {
             </div>
           </div>
 
-          {seeMore ? (
-            <div className="more-certificate-container">
               {/* Certificate box */}
               <div className="my-education-box">
                 <div className="unversity-image-container-in-my-education">
@@ -979,277 +1215,343 @@ const App = () => {
       </div>
 
       {/* Project Container*/}
-      <div className="project-made-container" id="projects">
+      <div className="project-made-container" id="projects" ref={projectsRef}>
         <div className="about-me-container-heading">
           <FaProjectDiagram /> My{" "}
           <span className="different-color-span-text">Projects</span>
         </div>
 
-        <div className="project-made-box-container">
+        <motion.div className="project-made-box-container"
+        variants={projectContainerVariants}
+        initial="hidden"
+        animate={isProjectsInView ? "visible" : "hidden"} // Trigger animation when inView is true
+        >
           {/* Project-box-each */}
-          <div className="project-made-box">
+          <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
             <div className="project-image-container">
               <img src={project1} alt="Project" />
             </div>
             <div className="project-text-and-link-details-container">
-             Get code:- <a href="https://github.com/bhopchi/-Nusrat_Fateh_Ali_Khan-s_lyrics-Text_Generation_with_an_RNN_LSTM">Click Here</a>
+              Get code:-{" "}
+              <a href="https://github.com/bhopchi/-Nusrat_Fateh_Ali_Khan-s_lyrics-Text_Generation_with_an_RNN_LSTM">
+                Click Here
+              </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Project-box-each */}
-          <div className="project-made-box">
+          <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
             <div className="project-image-container">
               <img src={project2} alt="Project" />
             </div>
             <div className="project-text-and-link-details-container">
-            Get code:- <a href="https://github.com/bhopchi/Parkinsons-Disease-Detection-using-Inception-and-Xception-with-Attention-Mechanism.ipynb">Click Here</a>
+              Get code:-{" "}
+              <a href="https://github.com/bhopchi/Parkinsons-Disease-Detection-using-Inception-and-Xception-with-Attention-Mechanism.ipynb">
+                Click Here
+              </a>
             </div>
-          </div>
+            </motion.div>
 
           {/* Project-box-each */}
-          <div className="project-made-box">
+          <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
             <div className="project-image-container">
               <img src={project3} alt="Project" />
             </div>
             <div className="project-text-and-link-details-container">
-            Get code:- <a href="https://github.com/bhopchi/-Esophageal-Cancer-Detection-Using-Machine-Learning-Techniques-">Click Here</a>
+              Get code:-{" "}
+              <a href="https://github.com/bhopchi/-Esophageal-Cancer-Detection-Using-Machine-Learning-Techniques-">
+                Click Here
+              </a>
             </div>
-          </div>
+            </motion.div>
 
           {seeMoreProject ? (
             <>
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project4} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                {/* Get code:- <a href="https://github.com/bhopchi/Identifying_Brain_Tumors_with_Transfer_Learning_and_Attention_Based_Models">Click Here</a> */}
+                  {/* Get code:- <a href="https://github.com/bhopchi/Identifying_Brain_Tumors_with_Transfer_Learning_and_Attention_Based_Models">Click Here</a> */}
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project5} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Identifying_Brain_Tumors_with_Transfer_Learning_and_Attention_Based_Models">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Identifying_Brain_Tumors_with_Transfer_Learning_and_Attention_Based_Models">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project6} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Ovarian-Cancer-Subtypes-with-Enhanced-Pre-trained-Models-Using-Differential-Attention">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Ovarian-Cancer-Subtypes-with-Enhanced-Pre-trained-Models-Using-Differential-Attention">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project7} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                  
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project8} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project9} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project10} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Pathological_Retinal_Alterations_in_Diabetes">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Pathological_Retinal_Alterations_in_Diabetes">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project11} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project12} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/VGG16_and_Xception_Models_for_Breast_Cancer_Classification">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/VGG16_and_Xception_Models_for_Breast_Cancer_Classification">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project13} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                  
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project14} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project15} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project16} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project17} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Deep-Learning-Based-White-Blood-Cell-Classification-using-Multi-Head-Attention-Mechanism">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Deep-Learning-Based-White-Blood-Cell-Classification-using-Multi-Head-Attention-Mechanism">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project18} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project19} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Predicting_Prostate_Cancer_Risk_Based_on_PSA_and_Clinical_Factors">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Predicting_Prostate_Cancer_Risk_Based_on_PSA_and_Clinical_Factors">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project20} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project21} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Computational_intelligence_for_early_detection_of_infertility_in_women.ipynb">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Computational_intelligence_for_early_detection_of_infertility_in_women.ipynb">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project22} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                  
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project23} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/Spine_X_ray_images_Classification_using_Pretrained_Models_with_Attention_Mechanism">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/Spine_X_ray_images_Classification_using_Pretrained_Models_with_Attention_Mechanism">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project24} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project25} alt="Project" />
                 </div>
                 <div className="project-text-and-link-details-container">
-                Get code:- <a href="https://github.com/bhopchi/brain_tumor_MRI">Click Here</a>
+                  Get code:-{" "}
+                  <a href="https://github.com/bhopchi/brain_tumor_MRI">
+                    Click Here
+                  </a>
                 </div>
-              </div>
+                </motion.div>
 
               {/* Project-box-each */}
-              <div className="project-made-box">
+              <motion.div className="project-made-box"
+        variants={projectBoxVariants}
+          >
                 <div className="project-image-container">
                   <img src={project26} alt="Project" />
                 </div>
-                <div className="project-text-and-link-details-container">
-                 
-                </div>
-              </div>
+                <div className="project-text-and-link-details-container"></div>
+                </motion.div>
             </>
           ) : null}
-        </div>
+        </motion.div>
 
         <button
           className="see-more-certificate-button"
@@ -1438,22 +1740,34 @@ const App = () => {
           <div className="footer-box-1 footer-box">
             <h1 className="footer-box-heading">Pratham's Portfolio</h1>
             <div className="footer-box-1-paragrauph">
-              Thank you for visiting my personal portfolio website. Kindly
-              reload this webpage & scroll up if you couldn't view my project
-              contents. <br /> <br />
-              Discuss a project or just want to say Hi? Feel free to connect
-              with me on LinkedIn or message me on WhatsApp. Keep Rising, I'll
-              see you at the Top!
+           <b>Thank you for exploring my portfolio!</b> <br />
+If something caught your attention or you’d like to collaborate, let’s connect. <br />
+
+Reach out to me on <a href="https://www.linkedin.com/in/pratham-kaushik-615a77231" > LinkedIn</a> or <a href="https://wa.me/919999459710?text=Hi%20Pratham%20"> WhatsApp</a> to discuss opportunities, share feedback, or just say hi. <br /> <br /> <b>
+
+Keep pushing boundaries—let's create something extraordinary together!</b>
+
+
             </div>
           </div>
         </div>
 
-
-
-        <hr style={{ width:'95%', margin:"1% auto", background:'#009688', color:'#009688',height:'.3px',border:'none'}} />
+        <hr
+          style={{
+            width: "95%",
+            margin: "1% auto",
+            background: "#009688",
+            color: "#009688",
+            height: ".3px",
+            border: "none",
+          }}
+        />
 
         <div className="developer-details-footer">
-          Developed By <a href="https://brajesh.tech" target="_blank" rel="noreferrer">Brajesh Kumar Thakur</a>
+          Developed By{" "}
+          <a href="https://brajesh.tech" target="_blank" rel="noreferrer">
+            Brajesh Kumar Thakur
+          </a>
         </div>
       </div>
     </div>
